@@ -1,0 +1,38 @@
+﻿@page "/"
+@using Models;
+@using PinewoodTask.Constants
+@using PinewoodTask.Interface
+@inject ICustomerDAL _customerDAL
+@inject NavigationManager _navigationManager
+@rendermode InteractiveServer
+
+<h3 class="mb-3">Customers</h3>
+
+<MudButton EndIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" Class="mb-5" Href="Form">Create</MudButton>
+
+<MudDataGrid Items="@_customers" Filterable="false" SortMode="SortMode.None" Groupable="false" RowStyleFunc="@_rowStyleFunc">
+    <Columns>
+        <PropertyColumn Property="x => x.FullName" Title="Name" />
+        <PropertyColumn Property="x => x.EmailAddress" Title="Email Address" />
+        <PropertyColumn Property="x => x.PhoneNumber" Title="Phone Number" />
+        <PropertyColumn Property="x => x.OptInMarketing" Title="Opted in to Marketing" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudStack Row>
+                    @if (context.Item.AuditAction != AuditActionTypes.Delete)
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => Edit(context.Item.CustomerID)" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick="() => Delete(context.Item)" />
+                    }
+                    else
+                    {
+                        <MudChip Size="Size.Small" Color="Color.Error">Deleted</MudChip>
+                    }
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
+
+
+

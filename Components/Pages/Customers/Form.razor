@@ -1,0 +1,62 @@
+﻿@page "/Form/"
+@page "/Form/{customerID:guid}"
+@using Models;
+@using PinewoodTask.Interface
+@inject ICustomerDAL _customerDAL
+@inject ISnackbar _snackbar
+@inject NavigationManager _navigationManager
+@rendermode InteractiveServer
+
+<h3 class="mb-3">@(CustomerID == null ? "New" : "Edit") Customer</h3>
+
+<EditForm Model="_customer" OnValidSubmit="Save" OnInvalidSubmit="Invalid" class="row">
+    <DataAnnotationsValidator />
+
+    @if (!_valid)
+    {
+        <ValidationSummary />
+    }
+
+    <div class="row">
+        <div class="col">
+            <MudTextField @bind-Value="_customer.FirstName" Label="First Name" Variant="Variant.Outlined" Adornment="Adornment.Start"></MudTextField>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col">
+            <MudTextField @bind-Value="_customer.MiddleName" Label="Middle Name" Variant="Variant.Outlined" Adornment="Adornment.Start"></MudTextField>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <MudTextField @bind-Value="_customer.LastName" Label="Last Name" Variant="Variant.Outlined" Adornment="Adornment.Start"></MudTextField>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <MudTextField @bind-Value="_customer.EmailAddress" Label="Email Address" Variant="Variant.Outlined" Adornment="Adornment.Start"></MudTextField>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <MudTextField @bind-Value="_customer.PhoneNumber" Label="Phone Number" Variant="Variant.Outlined" Adornment="Adornment.Start"></MudTextField>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <MudSwitch @bind-Value="_customer.OptInMarketing" Label="Opt in to Marketing" Color="Color.Success" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Class="mt-3" ButtonType="ButtonType.Submit">Submit</MudButton>
+        </div>
+    </div>
+
+</EditForm>
+
+
+
+
